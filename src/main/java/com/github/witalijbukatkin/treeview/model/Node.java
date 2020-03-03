@@ -1,48 +1,43 @@
 package com.github.witalijbukatkin.treeview.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
     private Integer id;
 
+    @JsonIgnore
+    private Node parent;
+
     private String value;
 
+    @JsonIgnore
     private List<Node> children;
 
-    public Node(Integer id, String value, List<Node> children) {
+    public Node(Node parent, Integer id, String value, List<Node> children) {
+        this.parent = parent;
         this.id = id;
         this.value = value;
         this.children = children;
     }
 
-    public Node(String value, List<Node> children) {
-        this.value = value;
-        this.children = children;
+    public Node(Node parent, Integer id, String value) {
+        this(parent, id, value, new ArrayList<>());
     }
 
-    public Node(String value) {
-        this.value = value;
+    public Node(Node parent, String value, List<Node> children) {
+        this(parent, null, value, children);
+    }
+
+    public Node(Node parent, String value) {
+        this(parent, null, value);
     }
 
     public Node() {
-    }
-
-    public void addChild(Node node) {
-        if (children != null) {
-            children.add(node);
-        }
-    }
-
-    public void removeChild(int id) {
-        if (children.size() > id) {
-            children.remove(id);
-        }
-    }
-
-    public void removeChild(Node node) {
-        if (children != null) {
-            children.remove(node);
-        }
+        this(null, null);
     }
 
     public Integer getId() {
@@ -51,6 +46,14 @@ public class Node {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
     }
 
     public String getValue() {
@@ -67,5 +70,10 @@ public class Node {
 
     public void setChildren(List<Node> children) {
         this.children = children;
+    }
+
+    @JsonGetter
+    public boolean hasChild() {
+        return !children.isEmpty();
     }
 }

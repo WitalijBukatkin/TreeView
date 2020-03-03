@@ -1,0 +1,7 @@
+.modal .modal-content, .modal .form-control {
+    background-color: rgb(24, 26, 27);
+}
+
+.modal h5, .modal p, .modal .close, .modal .form-control {
+    color: wheat;
+}

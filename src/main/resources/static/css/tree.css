@@ -10,7 +10,12 @@ body {
 .tree li {
     list-style-type: none;
     padding: 10px 5px 0 5px;
-    position: relative
+    position: relative;
+    user-select: none;
+}
+
+.tree li .active {
+    background-color: rgb(97, 100, 102);
 }
 
 .tree li::before, .tree li::after {
