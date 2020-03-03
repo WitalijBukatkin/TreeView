@@ -24,15 +24,15 @@ public class TreeViewController {
     @Autowired
     private NodeDao nodeDao;
 
-    @GetMapping("{id}")
-    public Node get(@PathVariable int id) {
-        log.info("get {}", id);
-        return nodeDao.get(id);
+    @GetMapping
+    public Node getRoot() {
+        log.info("get from root");
+        return nodeDao.get(0);
     }
 
-    @GetMapping("{id}/children")
-    public List<Node> getChildren(@PathVariable int id) {
-        log.info("getChildren of {}", id);
+    @GetMapping("{id}")
+    public List<Node> get(@PathVariable int id) {
+        log.info("get of {}", id);
         return nodeDao.get(id).getChildren();
     }
 

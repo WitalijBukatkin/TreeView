@@ -19,20 +19,16 @@ function displayNode(node) {
 }
 
 function getRootNode() {
-    tree.empty();
-    downloadNode(tree, 0);
-}
+    $.get('/ajax/nodes', function (nodes) {
+        tree.empty()
+            .append(displayNode(nodes));
 
-function downloadNode(root, id) {
-    $.get('/ajax/nodes/' + id, function (nodes) {
-        root.empty();
-        root.append(displayNode(nodes));
         updateTree();
     }, 'json');
 }
 
 function downloadChildren(root, id) {
-    $.get('/ajax/nodes/' + id + "/children", async function (nodes) {
+    $.get('/ajax/nodes/' + id, async function (nodes) {
         root.empty();
 
         let value = "";
