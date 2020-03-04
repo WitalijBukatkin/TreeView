@@ -64,7 +64,7 @@ public class TreeViewController {
         nodeDao.remove(id);
     }
 
-    @PostMapping("{id}/move/to/{id}")
+    @PostMapping("{id}/move/to/{toId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void move(@PathVariable int id, @PathVariable int toId) {
         log.info(" {}", id);

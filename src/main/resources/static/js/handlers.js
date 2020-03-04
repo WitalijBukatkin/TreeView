@@ -1,14 +1,27 @@
 function updateTree() {
-    $('.tree li > span').unbind().on('click', function (e) {
+    $('.tree .ui-draggable')
+        .draggable('destroy')
+        .droppable('destroy');
+
+    $('.tree span').unbind().on('click', function () {
         if ($(this).hasClass("active")) {
             $(this).removeClass("active");
         } else {
-            $('.tree li > span').removeClass("active");
+            $('.tree span').removeClass("active");
             $(this).addClass("active");
+        }
+    }).draggable({
+        containment: ".tree",
+        snap: true,
+        snapMode: 'inner',
+        revert: 'invalid'
+    }).droppable({
+        drop: function (event, ui) {
+            moveNode(ui.draggable, $(this));
         }
     });
 
-    $('.tree li.parent_li > span').on('dblclick', function (e) {
+    $('.tree .parent_li > span').on('dblclick', function (e) {
         let children = $(this).parent().find('> ul');
         let id = $(this).parent().val();
 

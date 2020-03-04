@@ -14,7 +14,9 @@ function displayNode(node) {
             "<ul></ul>" +
             "</li>";
     } else {
-        return "<li value='" + node.id + "'><span><i class=\"fa fa-file\"></i> " + node.value + " </span></li>";
+        return "<li value='" + node.id + "'>" +
+            "<span><i class=\"fa fa-file\"></i> " + node.value + " </span>" +
+            "</li>";
     }
 }
 
@@ -46,20 +48,6 @@ function downloadChildren(root, id) {
     }, 'json');
 }
 
-function onSuccessCreateNode() {
-    let active = $('.tree .active').parent();
-
-    if (!active.hasClass('parent_li')) {
-        active.addClass('parent_li');
-
-        let text = active.text();
-        active.empty();
-        active.append("<span><i class=\"fa fa-folder-open\"></i>" + text + "</span><ul></ul>");
-    }
-
-    downloadChildren(active.find('> ul'), active.val());
-}
-
 function onSuccessUpdateNode() {
     let active = $('.tree .active').parent();
 
@@ -77,10 +65,21 @@ function createNode(id) {
         return;
     }
 
-    $.post('/ajax/nodes/' + id, {value: value}, onSuccessCreateNode)
-        .fail(function () {
-            showNoty('Error creating', 'error');
-        });
+    $.post('/ajax/nodes/' + id, {value: value}, function () {
+        let active = $('.tree .active').parent();
+
+        if (!active.hasClass('parent_li')) {
+            active.addClass('parent_li');
+
+            let text = active.text();
+            active.empty();
+            active.append("<span><i class=\"fa fa-folder-open\"></i>" + text + "</span><ul></ul>");
+        }
+
+        downloadChildren(active.find('> ul'), active.val());
+    }).fail(function () {
+        showNoty('Error creating', 'error');
+    });
 
     valueDialog.modal('hide');
 }
@@ -119,6 +118,33 @@ function removeNode(id) {
     deleteDialog.modal('hide');
 }
 
-function moveNode() {
-    //TODO: Not implemented!
+function moveNode(draggable, target) {
+    let id = draggable.parent().val();
+    let toId = target.parent().val();
+
+    if (id === 0) {
+        showNoty("Draggable is root!", 'error');
+        getRootNode();
+        return;
+    }
+
+    $.post('/ajax/nodes/' + id + "/move/to/" + toId, function () {
+        let parentTopDraggable = draggable.parent().parent();
+
+        downloadChildren(parentTopDraggable, parentTopDraggable.parent().val());
+
+        let parentTarget = target.parent();
+
+        if (!parentTarget.hasClass('parent_li')) {
+            parentTarget.addClass('parent_li');
+
+            let text = parentTarget.text();
+            parentTarget.empty();
+            parentTarget.append("<span><i class=\"fa fa-folder-open\"></i>" + text + "</span><ul></ul>");
+        }
+
+        downloadChildren(parentTarget.find('> ul'), toId);
+    }).fail(function () {
+        showNoty('Error moving', 'error');
+    });
 }
