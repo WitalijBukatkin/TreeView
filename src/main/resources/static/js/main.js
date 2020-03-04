@@ -1,3 +1,8 @@
+let tree = $('.tree').find("> ul");
+
+let valueDialog = $("#valueDialog");
+let deleteDialog = $("#deleteDialog");
+
 $(function () {
     getRootNode();
 });

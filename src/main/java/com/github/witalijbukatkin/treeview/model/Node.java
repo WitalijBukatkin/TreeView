@@ -3,18 +3,26 @@ package com.github.witalijbukatkin.treeview.model;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Node {
+    @Id
+    @GeneratedValue
     private Integer id;
 
     @JsonIgnore
+    @ManyToOne
     private Node parent;
 
+    @NotEmpty
     private String value;
 
     @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Node> children;
 
     public Node(Node parent, Integer id, String value, List<Node> children) {

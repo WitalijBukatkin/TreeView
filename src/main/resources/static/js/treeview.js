@@ -1,8 +1,3 @@
-let tree = $('.tree').find("> ul");
-
-let valueDialog = $("#valueDialog");
-let deleteDialog = $("#deleteDialog");
-
 function displayNode(node) {
     if (node == null) {
         return "";
@@ -31,7 +26,8 @@ function getRootNode() {
 
 function downloadChildren(root, id) {
     $.get('/ajax/nodes/' + id, async function (nodes) {
-        root.empty();
+
+        root.append("</br><i class='fa fa-spinner'></i>");
 
         let value = "";
 
@@ -39,8 +35,9 @@ function downloadChildren(root, id) {
             value += displayNode(each);
         });
 
-        //TODO: enable this
-        //await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        root.empty();
 
         root.append(value);
 

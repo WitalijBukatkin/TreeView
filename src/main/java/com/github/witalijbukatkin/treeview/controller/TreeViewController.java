@@ -1,7 +1,7 @@
 package com.github.witalijbukatkin.treeview.controller;
 
-import com.github.witalijbukatkin.treeview.dao.NodeDao;
 import com.github.witalijbukatkin.treeview.model.Node;
+import com.github.witalijbukatkin.treeview.repository.NodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,18 @@ public class TreeViewController {
     public static final String REST_URL = "/ajax/nodes";
 
     @Autowired
-    private NodeDao nodeDao;
+    private NodeRepository repository;
 
     @GetMapping
     public Node getRoot() {
         log.info("get from root");
-        return nodeDao.get(0);
+        return repository.get(0);
     }
 
     @GetMapping("{id}")
     public List<Node> get(@PathVariable int id) {
         log.info("get of {}", id);
-        return nodeDao.get(id).getChildren();
+        return repository.get(id).getChildren();
     }
 
     @PostMapping("{id}")
@@ -41,7 +41,7 @@ public class TreeViewController {
     public ResponseEntity<Node> create(@PathVariable int id, @RequestParam String value) {
         log.info("create of {} and value {}", id, value);
 
-        Node node = nodeDao.create(id, value);
+        Node node = repository.create(id, value);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/" + node.getId())
@@ -54,20 +54,20 @@ public class TreeViewController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable int id, @RequestParam String value) {
         log.info("update of {} and value {}", id, value);
-        nodeDao.update(id, value);
+        repository.update(id, value);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remove(@PathVariable int id) {
         log.info("remove {}", id);
-        nodeDao.remove(id);
+        repository.delete(id);
     }
 
     @PostMapping("{id}/move/to/{toId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void move(@PathVariable int id, @PathVariable int toId) {
-        log.info(" {}", id);
-        nodeDao.move(id, toId);
+        log.info("move {} to {}", id, toId);
+        repository.move(id, toId);
     }
 }

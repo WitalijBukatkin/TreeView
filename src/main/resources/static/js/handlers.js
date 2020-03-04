@@ -1,7 +1,5 @@
 function updateTree() {
-    $('.tree .ui-draggable')
-        .draggable('destroy')
-        .droppable('destroy');
+    $('.tree .ui-draggable').draggable('destroy');
 
     $('.tree span').unbind().on('click', function () {
         if ($(this).hasClass("active")) {
@@ -38,8 +36,14 @@ function createClick() {
 
     let id = 0;
 
-    if (active.length != null) {
+    if (active.length !== 0) {
         id = active.parent().val();
+    } else {
+        let root = $('.tree > ul > li > span');
+
+        if (root.hasClass("active")) {
+            root.removeClass("active");
+        }
     }
 
     let dialog = valueDialog.modal('show');
