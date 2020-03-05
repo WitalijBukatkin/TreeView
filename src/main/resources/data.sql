@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020. Witalij Bukatkin
+ * Github profile: https://github.com/witalijbukatkin
+ */
+
 CREATE UNIQUE INDEX ON node_children (children_id, node_id);
 
 insert into node

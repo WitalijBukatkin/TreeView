@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020. Witalij Bukatkin
+ * Github profile: https://github.com/witalijbukatkin
+ */
+
 package com.github.witalijbukatkin.treeview.controller;
 
 import com.github.witalijbukatkin.treeview.model.Node;

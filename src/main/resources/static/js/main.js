@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020. Witalij Bukatkin
+ * Github profile: https://github.com/witalijbukatkin
+ */
+
 let tree = $('.tree').find("> ul");
 
 let valueDialog = $("#valueDialog");
