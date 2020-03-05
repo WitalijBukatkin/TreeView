@@ -14,7 +14,7 @@ $(function () {
 
 function showNoty(text, type) {
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + text,
+        text: text,
         type: type,
         layout: "top",
         timeout: 1000
