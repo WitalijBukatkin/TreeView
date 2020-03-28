@@ -1,6 +1,8 @@
 TreeView
 =============================
 
+### [Task description](https://github.com/WitalijBukatkin/TreeView/wiki/Task)
+
 #### Goal
 Showing tree nodes, implement CRUD operations and moving, nodes saves to DB
 
@@ -13,3 +15,9 @@ Showing tree nodes, implement CRUD operations and moving, nodes saves to DB
 - Jquery, JQuery-UI, Noty
 - Bootstrap,
 - Font-awesome
+
+#### Run it
+```
+git clone https://github.com/WitalijBukatkin/TreeView
+mvnw spring-boot:run
+```
